@@ -83,10 +83,12 @@ async function bamazonStart(){
         // console.log(answers.id);
         let quantityToBuy = parseInt(answers.quantity);
         // console.log(answers.quantity);
-        const sqlData2 = await sqlPromise('SELECT * FROM products');
+        
         
         let stockFinal = 0;
         let purchaseCost = 0;
+        let sqlData2;
+        let command = "";
 
         for(let i=0; i<sqlData.length; i++){
             // console.log(sqlData[i].item_id);
@@ -95,15 +97,20 @@ async function bamazonStart(){
                 //fun shit happens
                 stockFinal = sqlData[i].stock_quantity - quantityToBuy;
                 if(stockFinal < 0){
-                    console.log("We dont have enough shit.");
+                    console.log("We dont have enough homefry.");
                     //consider throwing a boolean here to track insufficient inventory
+                    break;
                 }
                 //what happens next 
                 purchaseCost = sqlData[i].price * quantityToBuy;
                 console.log(`Your purchase cost is $${purchaseCost.toFixed(2)}`);
 
+                command = "UPDATE products SET stock_quantity = " + stockFinal + " WHERE item_id = " + sqlData[i].item_id;
+                // console.log(command);
+                sqlData2 = await sqlPromise(command);
+
             }
-            else if (i===sqlData.length){
+            else if (i===sqlData.length-1){
                 //bad shit happens
                 console.log("The item is not found. Sorry, not sorry.");
             }
@@ -115,15 +122,3 @@ async function bamazonStart(){
         console.error(error)
     }
 }
-
-
-//set up JS file that logs data from table
-
-//use inquirer to prompt user with questions
-
-//once order is placed by user, send mysql request to see if fake store has product available
-
-//use JS file to communicate status of order
-
-//use mysql to update data based on what customer wanted
-

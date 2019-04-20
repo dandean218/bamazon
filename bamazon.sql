@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS bamazon;
+-- DROP DATABASE IF EXISTS bamazon;
 CREATE DATABASE bamazon;
 
 USE bamazon;
@@ -10,6 +10,8 @@ CREATE TABLE products (
     price INTEGER (10),
     stock_quantity DECIMAL(10,4) NULL
     );
+    
+
     
 INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
 VALUES (1, "Tube Socks", "Apparel", 42, 1000),
