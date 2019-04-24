@@ -108,7 +108,7 @@ async function bamazonStart(){
                 command = "UPDATE products SET stock_quantity = " + stockFinal + " WHERE item_id = " + sqlData[i].item_id;
                 // console.log(command);
                 sqlData2 = await sqlPromise(command);
-
+                break;
             }
             else if (i===sqlData.length-1){
                 //bad shit happens
